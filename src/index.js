@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import TitleTag from "./components/title";
+import App from "./components/app";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<TitleTag />); //custom tag
+root.render(<App />); //custom tag
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
