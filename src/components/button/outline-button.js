@@ -1,5 +1,10 @@
-function OutlineButton({ label = "default" }) {
-  return <button>{label}</button>;
+function OutlineButton({ label = "default", num, ...rest }) {
+  console.log({ ...rest });
+  return (
+    <button className="btn" {...rest}>
+      {label}
+    </button>
+  );
 }
 
 export default OutlineButton;
