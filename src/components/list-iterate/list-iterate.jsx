@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { MOCKDATA } from "../../data";
 
-const ListItem = ({ item, index }) => {
-  console.log(item);
+const ListItem = ({ item, index, handleCart }) => {
   function handleAdd(e, arg) {
     e.stopPropagation();
-    alert(arg);
+    handleCart(arg);
+    // alert(arg);
   }
 
   function handleCard() {
@@ -18,7 +18,7 @@ const ListItem = ({ item, index }) => {
         <span className="px-3 text-danger">{item.category}</span>
         <button
           className="btn btn-primary btn-sm"
-          onClick={(e) => handleAdd(e, item.title)}
+          onClick={(e) => handleAdd(e, item)}
         >
           + Add to cart
         </button>
@@ -26,12 +26,19 @@ const ListItem = ({ item, index }) => {
     </>
   );
 };
-
 export default function ListIterate() {
+  const [cart, setCart] = useState([]);
+
+  function handleCart(arg) {
+    setCart((cart) => [...cart, arg]);
+    setCart((cart) => [...cart, arg]);
+    console.log(cart);
+  }
   return (
     <>
+      <div>cart item is {cart?.length}</div>
       {MOCKDATA.products.map((el, index) => (
-        <ListItem key={el.id} item={el} index={index} />
+        <ListItem key={el.id} item={el} index={index} handleCart={handleCart} />
       ))}
     </>
   );
