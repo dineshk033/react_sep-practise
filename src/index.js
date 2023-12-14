@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import TitleTag from "./components/title";
+import "bootstrap/dist/css/bootstrap.css";
 import App from "./components/app";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
