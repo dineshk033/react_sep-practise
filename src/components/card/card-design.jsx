@@ -6,6 +6,8 @@ export default function CardDesign({
   brand,
   price,
   discountPercentage,
+  handleCart,
+  prod,
 }) {
   //   const actualPrice =  price * discountPercentage/100;
   return (
@@ -22,6 +24,12 @@ export default function CardDesign({
             ${discountPercentage}{" "}
           </span>
         </h4>
+        <button
+          className="btn  btn-outline-warning"
+          onClick={() => handleCart(prod)}
+        >
+          Add to cart
+        </button>
       </div>
     </div>
   );
