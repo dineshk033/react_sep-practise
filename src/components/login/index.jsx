@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { passwordMatch } from "../../shared";
+import { loginSchema, passwordMatch } from "../../shared";
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -10,14 +10,34 @@ export default function Login() {
   // const [userName, setUserName] = useState("xx@gmail.com");
   // const [password, setPassword] = useState("");
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    if (!form.userName) {
-      setError({ ...error, userName: "Username is requierd" });
+    try {
+      const yupERROR = await loginSchema.validate(form, { abortEarly: false });
+      console.log(yupERROR);
+    } catch (err0r) {
+      console.log(err0r.errors);
+      //create temporary error object
+      const newErrors = {};
+      // console.log(err0r.errors);
+      // console.log(err0r.inner);
+      err0r.inner.forEach((error) => {
+        const key = error.path;
+        //comparing already key present, if found i never ovride the value again
+        if (!(key in newErrors)) {
+          newErrors[error.path] = error.message;
+        }
+      });
+      setError(newErrors);
+      console.log(newErrors);
     }
-    if (!passwordMatch(form.password)) {
-      setError({ ...error, password: "Password doesn't meet requirement" });
-    }
+
+    // if (!form.userName) {
+    //   setError({ ...error, userName: "Username is requierd" });
+    // }
+    // if (!passwordMatch(form.password)) {
+    //   setError({ ...error, password: "Password doesn't meet requirement" });
+    // }
     console.log(form.password, form.userName);
   }
   function handleChange(e) {
@@ -66,7 +86,7 @@ export default function Login() {
             onChange={handleChange}
           />
           {error.userName && (
-            <small className="text-danger">Username is required</small>
+            <small className="text-danger">{error.userName}</small>
           )}
         </div>
         <div className="mb-3">
