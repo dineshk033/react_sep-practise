@@ -1,7 +1,9 @@
+import { useState } from "react";
 import Header from "./components/header";
 import ListIterate from "./components/list-iterate/list-iterate";
 import Login from "./components/login";
 import ProductItem from "./components/product-item";
+import Timer from "./components/timer";
 
 export default function App() {
   return (
@@ -9,7 +11,9 @@ export default function App() {
       <Header />
       <div className="container">
         <h1>React Practise</h1>
-        <Login />
+        {/* <Login /> */}
+        <Timer />
+
         <ListIterate />
         <ProductItem />
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MOCKDATA } from "../../data";
 
 const ListItem = ({ item, index, handleCart }) => {
@@ -28,6 +28,16 @@ const ListItem = ({ item, index, handleCart }) => {
 };
 export default function ListIterate() {
   const [cart, setCart] = useState([]);
+
+  //only one time invoke when its mounting phase
+  useEffect(() => {
+    console.log("useEffect mounting phase");
+  }, []);
+
+  //only change in cart trigger below function
+  useEffect(() => {
+    console.log("useEffect cart updated");
+  }, [cart]);
 
   function handleCart(arg) {
     setCart((cart) => [...cart, arg]);
