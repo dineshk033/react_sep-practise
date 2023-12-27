@@ -1,8 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 export default function UserProfile({ isLogged }) {
+  const navigate = useNavigate();
   if (isLogged) {
     return (
       <div className="">
-        <button className="btn btn-outline-primary mx-2">Login</button>
+        <button
+          className="btn btn-outline-primary mx-2"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
         <button className="btn btn-outline-info">Signup</button>
       </div>
     );

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { MOCKDATA } from "../../data";
+import { useNavigate } from "react-router-dom";
 
 const ListItem = ({ item, index, handleCart }) => {
+  const navigate = useNavigate();
   function handleAdd(e, arg) {
     e.stopPropagation();
     handleCart(arg);
@@ -9,7 +11,8 @@ const ListItem = ({ item, index, handleCart }) => {
   }
 
   function handleCard() {
-    alert("card....");
+    // alert("card....");
+    navigate(`/products/${item.id}`);
   }
   return (
     <>
