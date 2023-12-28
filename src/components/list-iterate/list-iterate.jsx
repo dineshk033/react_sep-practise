@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MOCKDATA } from "../../data";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ListItem = ({ item, index, handleCart }) => {
   const navigate = useNavigate();
@@ -31,9 +32,20 @@ const ListItem = ({ item, index, handleCart }) => {
 };
 export default function ListIterate() {
   const [cart, setCart] = useState([]);
-
+  const [data, setData] = useState([]);
   //only one time invoke when its mounting phase
   useEffect(() => {
+    axios
+      .get("https://dummyjson.com/products/search", {
+        params: {
+          q: "shoe",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.products);
+        setData(res.data.products);
+      })
+      .catch((error) => console.error(error));
     console.log("useEffect mounting phase");
   }, []);
 
@@ -50,7 +62,7 @@ export default function ListIterate() {
   return (
     <>
       <div>cart item is {cart?.length}</div>
-      {MOCKDATA.products.map((el, index) => (
+      {data?.map((el, index) => (
         <ListItem key={el.id} item={el} index={index} handleCart={handleCart} />
       ))}
     </>
