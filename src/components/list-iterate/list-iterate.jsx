@@ -33,12 +33,13 @@ const ListItem = ({ item, index, handleCart }) => {
 export default function ListIterate() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("shoe");
   //only one time invoke when its mounting phase
   useEffect(() => {
     axios
       .get("https://dummyjson.com/products/search", {
         params: {
-          q: "shoe",
+          q: search,
         },
       })
       .then((res) => {
@@ -59,9 +60,37 @@ export default function ListIterate() {
     setCart((cart) => [...cart, arg]);
     console.log(cart);
   }
+
+  function handleSearch() {
+    axios
+      .get("https://dummyjson.com/products/search", {
+        params: {
+          q: search,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.products);
+        setData(res.data.products);
+      })
+      .catch((error) => console.error(error));
+  }
   return (
     <>
       <div>cart item is {cart?.length}</div>
+      <div className="row">
+        <div className="col-10">
+          <input
+            className="form-control"
+            defaultValue={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="col-2">
+          <button onClick={handleSearch} className="btn btn-outline-primary">
+            Search
+          </button>
+        </div>
+      </div>
       {data?.map((el, index) => (
         <ListItem key={el.id} item={el} index={index} handleCart={handleCart} />
       ))}

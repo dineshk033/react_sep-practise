@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { loginSchema, passwordMatch } from "../../shared";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -7,6 +9,7 @@ export default function Login() {
     password: "",
   });
   const [error, setError] = useState({ userName: "", password: "" });
+  const navigate = useNavigate();
   // const [userName, setUserName] = useState("xx@gmail.com");
   // const [password, setPassword] = useState("");
 
@@ -15,6 +18,15 @@ export default function Login() {
     try {
       const yupERROR = await loginSchema.validate(form, { abortEarly: false });
       console.log(yupERROR);
+      axios
+        .post("https://dummyjson.com/auth/login", {
+          username: form.userName,
+          password: form.password,
+        })
+        .then((res) => {
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
     } catch (err0r) {
       console.log(err0r.errors);
       //create temporary error object
@@ -40,6 +52,7 @@ export default function Login() {
     // }
     console.log(form.password, form.userName);
   }
+
   function handleChange(e) {
     // console.log(e.target.name);
     const key = e.target.name;
@@ -77,7 +90,6 @@ export default function Login() {
             Username/Email
           </label>
           <input
-            type="email"
             className="form-control"
             id="exampleFormControlInput1"
             value={form.userName}
