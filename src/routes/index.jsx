@@ -6,6 +6,7 @@ import Timer from "../components/timer";
 import PageNotFound from "../components/pagenotfound";
 import Dashboar from "../components/layout/dashboar";
 import ProductDetail from "../components/product-detail";
+import TodoComponent from "../components/todo";
 
 export default function RouterComponent() {
   return (
@@ -21,7 +22,9 @@ export default function RouterComponent() {
       <Route path="/utility" element=<Dashboar />>
         <Route path="timer" element=<Timer /> />
       </Route>
-
+      <Route path="/todo" element=<Dashboar />>
+        <Route index element=<TodoComponent /> />
+      </Route>
       <Route path="login" element=<Login /> />
       <Route path="*" element=<PageNotFound /> />
     </Routes>
