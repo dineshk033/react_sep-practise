@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import TodoCard from "./todo-card";
 import AllTask from "./all-task";
 import axios from "axios";
+import AddTask from "./addTask";
 const sample = {
   userId: 1,
   id: 3,
   title: "fugiat veniam minus",
   completed: false,
 };
+export const TodoContext = createContext([]);
 export default function TodoComponent() {
   const [list, setList] = useState([]);
   useEffect(() => {
@@ -32,15 +34,40 @@ export default function TodoComponent() {
       })
       .catch((err) => console.log(err));
   }
+
+  function handleDelete(id) {
+    axios
+      .delete(`http://localhost:5000/todo/${id}`)
+      .then((response) => {
+        console.log(response);
+        getTask();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleAdd(obj) {
+    axios
+      .post("http://localhost:5000/todo", obj)
+      .then((response) => {
+        console.log(response);
+        getTask();
+      })
+      .catch((err) => console.log(err));
+  }
   return (
-    <div className="row">
-      <div className="col-md-6">
-        <h4>All Task</h4>
-        <AllTask handleUpdate={handleUpdate} list={list} />
+    <TodoContext.Provider
+      value={{ list, handleUpdate, handleDelete, handleAdd }}
+    >
+      <div className="row">
+        <div className="col-md-6">
+          <h4>All Task</h4>
+          <AddTask />
+          <AllTask list={list} />
+        </div>
+        <div className="col-md-6">
+          <h4>Completed Task</h4>
+        </div>
       </div>
-      <div className="col-md-6">
-        <h4>Completed Task</h4>
-      </div>
-    </div>
+    </TodoContext.Provider>
   );
 }
