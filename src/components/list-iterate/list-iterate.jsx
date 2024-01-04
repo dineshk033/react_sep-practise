@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MOCKDATA } from "../../data";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../../context/user-context";
 
 const ListItem = ({ item, index, handleCart }) => {
+  const context = useContext(UserContext);
   const navigate = useNavigate();
   function handleAdd(e, arg) {
     e.stopPropagation();
@@ -20,6 +22,7 @@ const ListItem = ({ item, index, handleCart }) => {
       <div onClick={handleCard} className="m-3 p-2 card flex-row">
         {index + 1 + ". " + item.title}
         <span className="px-3 text-danger">{item.category}</span>
+        <span className="mx-3">USerID:{context.username}</span>
         <button
           className="btn btn-primary btn-sm"
           onClick={(e) => handleAdd(e, item)}

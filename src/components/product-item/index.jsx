@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import ProductImage from "./product-image";
 import ProductTitle from "./product-title";
+import { UserContext } from "../../context/user-context";
 
 export default function ProductItem() {
+  const context = useContext(UserContext);
   return (
     <div className="row border p-3">
       <div className="col-md-3">
@@ -13,7 +16,7 @@ export default function ProductItem() {
       <div className="col-md-6">
         <ProductTitle />
       </div>
-      <div className="col-md-3"></div>
+      <div className="col-md-3">User Id:{context}</div>
     </div>
   );
 }

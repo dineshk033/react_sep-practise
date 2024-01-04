@@ -3,6 +3,7 @@ import TodoCard from "./todo-card";
 import AllTask from "./all-task";
 import axios from "axios";
 import AddTask from "./addTask";
+import useFetch from "../../hooks/useFetch";
 const sample = {
   userId: 1,
   id: 3,
@@ -12,9 +13,14 @@ const sample = {
 export const TodoContext = createContext([]);
 export default function TodoComponent() {
   const [list, setList] = useState([]);
+  const [loading, data, error] = useFetch();
+  // useEffect(() => {
+  //   getTask();
+  // }, []);
+
   useEffect(() => {
-    getTask();
-  }, []);
+    setList(data);
+  }, [data]);
 
   function getTask() {
     axios
@@ -59,6 +65,8 @@ export default function TodoComponent() {
       value={{ list, handleUpdate, handleDelete, handleAdd }}
     >
       <div className="row">
+        {loading && <h1>Loading.....</h1>}
+        {error && <div className="alert alert-danger">{error.message}</div>}
         <div className="col-md-6">
           <h4>All Task</h4>
           <AddTask />
