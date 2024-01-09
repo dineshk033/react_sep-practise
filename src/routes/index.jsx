@@ -7,6 +7,7 @@ import PageNotFound from "../components/pagenotfound";
 import Dashboar from "../components/layout/dashboar";
 import ProductDetail from "../components/product-detail";
 import TodoComponent from "../components/todo";
+import Counter from "../components/counter";
 
 export default function RouterComponent() {
   return (
@@ -20,7 +21,7 @@ export default function RouterComponent() {
       </Route>
 
       <Route path="/utility" element=<Dashboar />>
-        <Route path="timer" element=<Timer /> />
+        <Route path="timer" element=<Counter /> />
       </Route>
       <Route path="/todo" element=<Dashboar />>
         <Route index element=<TodoComponent /> />

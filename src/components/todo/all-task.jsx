@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import TodoCard from "./todo-card";
 
-export default function AllTask({ list }) {
+const AllTask = memo(({ list }) => {
+  console.log("Usememo rendered", list);
   return (
     <>
       {list.map((item) => (
@@ -10,4 +11,6 @@ export default function AllTask({ list }) {
       ))}
     </>
   );
-}
+});
+
+export default AllTask;

@@ -4,6 +4,7 @@ import AllTask from "./all-task";
 import axios from "axios";
 import AddTask from "./addTask";
 import useFetch from "../../hooks/useFetch";
+import FilterTask from "./filter-task";
 const sample = {
   userId: 1,
   id: 3,
@@ -13,7 +14,9 @@ const sample = {
 export const TodoContext = createContext([]);
 export default function TodoComponent() {
   const [list, setList] = useState([]);
-  const [loading, data, error] = useFetch();
+  const [loading, data, error, fetch] = useFetch(
+    "http://localhost:5000/todo?userId=1"
+  );
   // useEffect(() => {
   //   getTask();
   // }, []);
@@ -22,21 +25,13 @@ export default function TodoComponent() {
     setList(data);
   }, [data]);
 
-  function getTask() {
-    axios
-      .get("http://localhost:5000/todo?userId=1")
-      .then((response) => {
-        setList(response.data);
-      })
-      .catch((eror) => console.log(eror));
-  }
   function handleUpdate(obj) {
     obj.completed = !obj.completed;
     axios
       .put(`http://localhost:5000/todo/${obj.id}`, obj)
       .then((response) => {
         console.log(response);
-        getTask();
+        fetch("http://localhost:5000/todo?userId=1");
       })
       .catch((err) => console.log(err));
   }
@@ -46,7 +41,8 @@ export default function TodoComponent() {
       .delete(`http://localhost:5000/todo/${id}`)
       .then((response) => {
         console.log(response);
-        getTask();
+
+        fetch("http://localhost:5000/todo?userId=1");
       })
       .catch((err) => console.log(err));
   }
@@ -56,7 +52,7 @@ export default function TodoComponent() {
       .post("http://localhost:5000/todo", obj)
       .then((response) => {
         console.log(response);
-        getTask();
+        fetch("http://localhost:5000/todo?userId=1");
       })
       .catch((err) => console.log(err));
   }
@@ -74,6 +70,7 @@ export default function TodoComponent() {
         </div>
         <div className="col-md-6">
           <h4>Completed Task</h4>
+          <FilterTask />
         </div>
       </div>
     </TodoContext.Provider>

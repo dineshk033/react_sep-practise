@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function useFetch() {
+export default function useFetch(url) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -9,8 +9,12 @@ export default function useFetch() {
   useEffect(() => {
     setLoading(true);
     setError(null);
+    fetch(url);
+  }, [url]);
+
+  function fetch(url) {
     axios
-      .get("http://localhost:5000/todo?userId=1")
+      .get(url)
       .then((response) => {
         setLoading(false);
         setData(response.data);
@@ -19,7 +23,6 @@ export default function useFetch() {
         setLoading(false);
         setError(eror);
       });
-  }, []);
-
-  return [loading, data, error];
+  }
+  return [loading, data, error, fetch];
 }
